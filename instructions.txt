@@ -1,0 +1,38 @@
+# Mini Challenge 1
+## Initial set up and default pages
+### Requirements
+1. As an end user I would like to view a home page with instructions on how to use this site.
+2. As an end user I would like to view an about page with information about the company so I know who to contract.
+3. As an end user I would like to have a means to log into my account so I can get to work on my issues.
+4. As an end user I would like to be able to log out, so that I can close my session and avoid other accidentally using my account.
+5. As an end user I would like to specify by team at the company so that I can access my team's board.
+### Acceptance Criteria
+1. Create a new django project in this directory (`~/Code/SDGKU/issue_mgr`).
+2. Make sure to create all necessary urlpatterns, views and templates to meet the requirements above.
+3. At minimum, your project should have 3 apps: `accounts`, `pages` and `issues`.
+### Note
+Within the `accounts/models.py` make sure you have these models:
+...
+from django.contrib.auth.models import AbstractUser
+class Role(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
+    def __str__(self):
+        return self.name
+class Team(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
+    def __str__(self):
+        return self.name
+class CustomUser(AbstractUser):
+    role = models.ForeignKey(
+        Role,
+        on_delete=models.CASCADE
+    )
+    team = models.ForeignKey(
+        Team,
+        on_delete=models.CASCADE
+    )
+```
+## Note 2
+The roles to consider for this project are: `scrum master`, `developer` and `product owner`.
